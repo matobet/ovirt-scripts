@@ -1,19 +1,30 @@
 #!/bin/sh
-
+#
 # Basic script that sets up the development environment for the oVirt engine
 # After completion run git clone git://gerrit.ovirt.org/ovirt-engine in suitable directory
 
-function install_dependencies() {
-  yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python unzip patternfly1
+function install_rpm() {
+  yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes patternfly1
+  # QUICK & DIRTY FIX for the powermock bug
+  yum downgrade -y java-1.7.0-openjdk{,-devel,-src,-headless}
 }
 
 function install_jboss() {
   wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip &&
-  unzip jboss-as-7.1.1.Final.zip -d /usr/share/jboss-as
+  unzip jboss-as-7.1.1.Final.zip -d /usr/share/
+  ln -s /usr/share/jboss-as{-7.1.1.Final,}
   echo 'JBOSS_HOME=/usr/share/jboss-as' >> $HOME/.bashrc
 }
 
+function install_dependencies() {
+  echo ">>> Installing dependencies"
+  yum install -y unzip # install_jboss already needs unzip installed
+  install_rpm & install_jboss
+  wait
+}
+
 function setup_db() {
+  echo ">>> Setting up DB"
   postgresql-setup initdb
   PGCONFIG=/var/lib/pgsql/data/pg_hba.conf
   sed -i "s/\(all\s\+127\.0\.0\.1\/32\s\+\)ident$/\1password/" $PGCONFIG
@@ -24,6 +35,7 @@ function setup_db() {
 }
 
 function setup_maven() {
+  echo ">>> Adjusting maven settings for GWT compilation"
   mkdir $HOME/.m2
   cat > $HOME/.m2/settings.xml <<EOF
 <settings xmlns="http://maven.apache.org/POM/4.0.0"
@@ -49,7 +61,6 @@ function setup_maven() {
 EOF
 }
 
-install_dependencies & install_jboss
-wait
+install_dependencies
 setup_maven
 setup_db

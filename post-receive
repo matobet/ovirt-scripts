@@ -1,0 +1,18 @@
+#!/bin/sh
+while read oldrev newrev refname; do
+  echo "Old revision: $oldrev"
+  echo "New revision: $newrev"
+  echo "Reference name: $refname"
+
+  WC=$HOME/ovirt-engine
+  PREFIX=$HOME/build
+  pushd $WC
+
+  GIT_DIR=".git" git fetch
+  GIT_DIR=".git" git reset --hard
+
+  rm -rf $PREFIX
+  make install-dev DEV_EXTRA_BUILD_FLAGS_GWT_DEFAULTS=" -Dgwt.cssResourceStyle=pretty"
+
+  popd
+done

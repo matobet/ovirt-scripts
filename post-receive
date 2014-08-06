@@ -10,9 +10,12 @@ while read oldrev newrev refname; do
 
   GIT_DIR=".git" git fetch
   GIT_DIR=".git" git reset --hard
+  GIT_DIR=".git" git clean -fdx
+  GIT_DIR=".git" git checkout `basename $refname`
+
 
   rm -rf $PREFIX
-  make install-dev DEV_EXTRA_BUILD_FLAGS_GWT_DEFAULTS=" -Dgwt.cssResourceStyle=pretty"
+  make install-dev PREFIX=$PREFIX DEV_EXTRA_BUILD_FLAGS_GWT_DEFAULTS=" -Dgwt.cssResourceStyle=pretty"
 
   popd
 done

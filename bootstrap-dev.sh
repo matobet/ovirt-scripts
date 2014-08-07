@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 #
 # Basic script that sets up the development environment for the oVirt engine
 # After completion run git clone git://gerrit.ovirt.org/ovirt-engine in suitable directory

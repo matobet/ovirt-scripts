@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 echo ">>> Adjusting maven settings for GWT compilation"
 mkdir $HOME/.m2

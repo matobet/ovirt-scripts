@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 SCRIPTS_DIR=${1-$HOME/ovirt-scripts}
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 while read oldrev newrev refname; do
   echo "Old revision: $oldrev"
   echo "New revision: $newrev"
@@ -13,6 +13,7 @@ while read oldrev newrev refname; do
   GIT_DIR=".git" git checkout `basename $refname`
 
 
+  killall java
   rm -rf $PREFIX
   $SCRIPTS_DIR/build.sh && $SCRIPTS_DIR/setup.sh && $SCRIPTS_DIR/run.sh
 

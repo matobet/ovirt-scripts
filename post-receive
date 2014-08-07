@@ -5,7 +5,6 @@ while read oldrev newrev refname; do
   echo "Reference name: $refname"
 
   WC=$HOME/ovirt-engine
-  PREFIX=$HOME/build
   pushd $WC
 
   GIT_DIR=".git" git fetch
@@ -15,8 +14,7 @@ while read oldrev newrev refname; do
 
 
   rm -rf $PREFIX
-  make clean
-  make install-dev PREFIX=$PREFIX DEV_EXTRA_BUILD_FLAGS_GWT_DEFAULTS=" -Dgwt.cssResourceStyle=pretty"
+  $SCRIPTS_DIR/build.sh && $SCRIPTS_DIR/setup.sh && $SCRIPTS_DIR/run.sh
 
   popd
 done

@@ -9,3 +9,7 @@ cat >> .bashrc <<EOF
 export PREFIX=$HOME/build
 export SCRIPTS_DIR=$SCRIPTS_DIR
 EOF
+
+# setup firewall
+firewall-cmd --add-port=8080/tcp
+firewall-cmd --add-port=8080/tcp --permanent

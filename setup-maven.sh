@@ -11,10 +11,18 @@ cat > $HOME/.m2/settings.xml <<EOF
 <!--**************************** PROFILES ****************************-->
 
   <activeProfiles>
+    <activeProfile>oVirtEnvSettings</activeProfile>
     <activeProfile>gwtdev</activeProfile>
   </activeProfiles>
 
   <profiles>
+    <profile>
+      <id>oVirtEnvSettings</id>
+      <properties>
+        <jbossHome>${env.JBOSS_HOME}</jbossHome>
+        <JAVA_HOME>${env.JAVA_HOME}</JAVA_HOME>
+      </properties>
+    </profile>
     <profile>
       <id>gwtdev</id>
       <properties>

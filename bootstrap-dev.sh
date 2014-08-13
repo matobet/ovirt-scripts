@@ -7,7 +7,22 @@ USER=${1-engine}
 SCRIPTS_DIR=${SCRIPTS_DIR-$HOME/ovirt-scripts}
 
 function install_rpm() {
-  yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes patternfly1 httpd
+  cat >> /etc/yum.repos.d/ovirt-snapshots.repo <<'EOF'
+[ovirt-snapshots]
+name=local
+baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/fc$releasever
+enabled=1
+gpgcheck=0
+priority=10
+[ovirt-snapshots-static]
+name=local
+baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/fc$releasever
+enabled=1
+gpgcheck=0
+priority=10
+EOF
+  yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
+    patternfly1 httpd  ovirt-host-deploy*
   # QUICK & DIRTY FIX for the powermock bug
   yum downgrade -y java-1.7.0-openjdk{,-devel,-src,-headless}
 }

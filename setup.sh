@@ -8,4 +8,5 @@ if [ ! -f $FILE ]; then
 fi
 echo "Using answer file $FILE:"
 cat $FILE
-yes Yes | $PREFIX/bin/engine-setup --config=$FILE
+yes Yes | $PREFIX/bin/engine-setup --config=$FILE &&
+psql -U engine -c "update vdc_options set option_value='a' where option_name='AdminPassword'"

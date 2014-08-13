@@ -8,4 +8,4 @@ if [ ! -f $FILE ]; then
 fi
 echo "Using answer file $FILE:"
 cat $FILE
-yes | $PREFIX/bin/engine-setup --config=$FILE
+yes Yes | $PREFIX/bin/engine-setup --config=$FILE

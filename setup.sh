@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-FILE=$HOME/ovirt-scripts/engine.answer
+FILE=$SCRIPTS_DIR/engine.answer
 
 if [ ! -f $FILE ]; then
   echo "Error: Answer file $FILE does not exist."
@@ -8,4 +8,4 @@ if [ ! -f $FILE ]; then
 fi
 echo "Using answer file $FILE:"
 cat $FILE
-echo -e "yes\nyes" | $PREFIX/bin/engine-setup --config=$FILE
+yes | $PREFIX/bin/engine-setup --config=$FILE

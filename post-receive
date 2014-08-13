@@ -7,7 +7,7 @@ while read oldrev newrev refname; do
   WC=$HOME/ovirt-engine
   pushd $WC
 
-  GIT_DIR=".git" git fetch
+  GIT_DIR=".git" git fetch --all
   GIT_DIR=".git" git reset --hard
   GIT_DIR=".git" git clean -fdx
   GIT_DIR=".git" git checkout `basename $refname`

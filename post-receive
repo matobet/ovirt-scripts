@@ -11,6 +11,7 @@ while read oldrev newrev refname; do
   GIT_DIR=".git" git reset --hard
   GIT_DIR=".git" git clean -fdx
   GIT_DIR=".git" git checkout `basename $refname`
+  GIT_DIR=".git" git pull
 
 
   killall java

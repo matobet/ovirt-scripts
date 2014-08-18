@@ -5,13 +5,11 @@ while read oldrev newrev refname; do
   echo "Reference name: $refname"
 
   WC=$HOME/ovirt-engine
+  rm -rf $WC
+  git clone $HOME/ovirt-engine.git $WC
   pushd $WC
 
-  GIT_DIR=".git" git fetch --all
-  GIT_DIR=".git" git reset --hard
-  GIT_DIR=".git" git clean -fdx
   GIT_DIR=".git" git checkout `basename $refname`
-  GIT_DIR=".git" git pull
 
 
   killall java

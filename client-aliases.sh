@@ -20,6 +20,9 @@ function engine {
     run)
       ssh-cmd '$SCRIPTS_DIR/run.sh'
     ;;
+    cleanup)
+      ssh-cmd '$SCRIPTS_DIR/cleanup.sh'
+    ;;
   esac
 }
 

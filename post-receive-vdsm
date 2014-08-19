@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+while read oldrev newrev refname; do
+  echo "Old revision: $oldrev"
+  echo "New revision: $newrev"
+  echo "Reference name: $refname"
+
+  WC=$HOME/vdsm
+  rm -rf $WC
+  git clone $HOME/vdsm.git $WC
+  pushd $WC
+
+  GIT_DIR=".git" git checkout `basename $refname`
+
+  $SCRIPTS_DIR/reinstall-vdsm.sh
+
+  popd
+done

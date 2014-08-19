@@ -11,9 +11,8 @@ while read oldrev newrev refname; do
 
   GIT_DIR=".git" git checkout `basename $refname`
 
-
   killall java
-  rm -rf $PREFIX
+  rm -rf $PREFIX/share/ovirt-engine/dbscripts/upgrade
   $SCRIPTS_DIR/build.sh && $SCRIPTS_DIR/setup.sh && $SCRIPTS_DIR/run.sh
 
   popd

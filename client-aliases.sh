@@ -4,7 +4,7 @@ function engine {
   command=$1
   shift
   function ssh-cmd {
-    ssh engine@$ENGINE_HOST "$*"
+    ssh engine@$ENGINE_HOST $*
   }
   case $command in
     push)
@@ -12,7 +12,7 @@ function engine {
     ;;
     debug)
       echo "Starting debug port-forward to host $ENGINE_HOST"
-      ssh-cmd -nNT -L 8787:localhost:8787 -L "$PSQL_FORWARD_PORT":localhost:5432
+      ssh-cmd -nNT -L 8787:localhost:8787 -L "$PSQL_FORWARD_PORT":localhost:5432 -L 8000:localhost:8000
     ;;
     psql)
       PGPASSWORD=engine psql -h localhost -p $PSQL_FORWARD_PORT -U engine
@@ -22,6 +22,10 @@ function engine {
     ;;
     cleanup)
       ssh-cmd '$SCRIPTS_DIR/cleanup.sh'
+    ;;
+    gwt)
+      ssh-cmd -X -A "\$SCRIPTS_DIR/gwt.sh $1" &
+      $BROWSER $ENGINE_HOST:8080/ovirt-engine/$1/?gwt.codesvr=$ENGINE_HOST
     ;;
   esac
 }
@@ -34,7 +38,7 @@ function vdsm {
   }
   case $command in
     push)
-      git push -f ssh://root@$host/root/vdsm.git "$(git rev-parse --abbrev-ref HEAD)"
+      git push -f ssh://root@$VDSM_HOST/root/vdsm.git "$(git rev-parse --abbrev-ref HEAD)"
     ;;
     status)
       ssh-cmd "service vdsmd status"

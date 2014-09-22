@@ -6,6 +6,9 @@ function engine {
   function ssh-cmd {
     ssh engine@$ENGINE_HOST $*
   }
+  function ssh-less {
+    ssh-cmd -t "less $1"
+  }
   case $command in
     push)
       git push -f ssh://engine@$ENGINE_HOST/home/engine/ovirt-engine.git "$(git rev-parse --abbrev-ref HEAD)"
@@ -28,7 +31,10 @@ function engine {
       $BROWSER $ENGINE_HOST:8080/ovirt-engine/$1/?gwt.codesvr=$ENGINE_HOST
     ;;
     log)
-      ssh-cmd 'tail -f $PREFIX/var/log/ovirt-engine/engine.log'
+      ssh-less $PREFIX/var/log/ovirt-engine/engine.log
+    ;;
+    build-log)
+      ssh-less build.log
     ;;
   esac
 }

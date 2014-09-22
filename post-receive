@@ -5,7 +5,7 @@ while read oldrev newrev refname; do
   echo "Reference name: $refname"
 
   WC=$HOME/ovirt-engine
-  rm -rf $WC
+  rm -rf $WC $PREFIX
   git clone $HOME/ovirt-engine.git $WC
   pushd $WC
 

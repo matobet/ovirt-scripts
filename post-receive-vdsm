@@ -11,7 +11,7 @@ while read oldrev newrev refname; do
 
   GIT_DIR=".git" git checkout `basename $refname`
 
-  GIT_DIR=".git" $SCRIPTS_DIR/configure-vdsm.sh && $SCRIPTS_DIR/reinstall-vdsm.sh
+  GIT_DIR=".git" { $SCRIPTS_DIR/configure-vdsm.sh && $SCRIPTS_DIR/reinstall-vdsm.sh } | tee $HOME/build.log
 
   popd
 done

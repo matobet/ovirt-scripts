@@ -13,7 +13,7 @@ while read oldrev newrev refname; do
 
   killall java
   rm -rf $PREFIX/share/ovirt-engine/dbscripts/upgrade
-  $SCRIPTS_DIR/build.sh && $SCRIPTS_DIR/setup.sh && $SCRIPTS_DIR/run.sh
+  { $SCRIPTS_DIR/build.sh && $SCRIPTS_DIR/setup.sh && $SCRIPTS_DIR/run.sh } | tee $HOME/build.log
 
   popd
 done

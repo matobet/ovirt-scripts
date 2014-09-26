@@ -22,7 +22,7 @@ gpgcheck=0
 priority=10
 EOF
   yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
-    patternfly1 httpd  ovirt-host-deploy*
+    patternfly1 httpd  ovirt-host-deploy* python-paramiko
   # QUICK & DIRTY FIX for the powermock bug
   yum downgrade -y java-1.7.0-openjdk{,-devel,-src,-headless}
 }

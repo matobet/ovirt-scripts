@@ -1,6 +1,13 @@
 export PSQL_FORWARD_PORT=5555
 
 function engine {
+  if [ $# -lt 1 ]; then
+      [ -z $ENGINE_HOST ] &&
+        echo "No engine build-slave specified in the ENGINE_HOST environment variable" ||
+        echo "Current engine build-slave at $ENGINE_HOST"
+      return
+  fi
+
   command=$1
   shift
   function ssh-cmd {
@@ -35,6 +42,9 @@ function engine {
     ;;
     build-log)
       ssh-less build.log
+    ;;
+    ssh)
+      ssh-cmd $*
     ;;
   esac
 }

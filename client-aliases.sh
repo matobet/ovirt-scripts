@@ -35,7 +35,7 @@ function engine {
     ;;
     gwt)
       ssh-cmd -X -A "\$SCRIPTS_DIR/gwt.sh $1" &
-      $BROWSER $ENGINE_HOST:8080/ovirt-engine/$1/?gwt.codesvr=$ENGINE_HOST
+      $BROWSER "$ENGINE_HOST:8080/ovirt-engine/$1/?gwt.codesvr=$ENGINE_HOST"
     ;;
     log)
       ssh-less $PREFIX/var/log/ovirt-engine/engine.log

@@ -6,39 +6,11 @@
 USER=${1-engine}
 SCRIPTS_DIR=${SCRIPTS_DIR-$HOME/ovirt-scripts}
 
-function install_rpm() {
-  cat >> /etc/yum.repos.d/ovirt-snapshots.repo <<'EOF'
-[ovirt-snapshots]
-name=local
-baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/fc$releasever
-enabled=1
-gpgcheck=0
-priority=10
-[ovirt-snapshots-static]
-name=local
-baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/fc$releasever
-enabled=1
-gpgcheck=0
-priority=10
-EOF
-  yum install -y git java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
-    patternfly1 httpd  ovirt-host-deploy* python-paramiko
-  # QUICK & DIRTY FIX for the powermock bug
-  yum downgrade -y java-1.7.0-openjdk{,-devel,-src,-headless}
-}
-
-function install_jboss() {
-  wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip &&
-  unzip jboss-as-7.1.1.Final.zip -d /usr/share/
-  ln -s /usr/share/jboss-as{-7.1.1.Final,}
-  echo 'JBOSS_HOME=/usr/share/jboss-as' >> $HOME/.bashrc
-}
-
 function install_dependencies() {
   echo ">>> Installing dependencies"
-  yum install -y unzip # install_jboss already needs unzip installed
-  install_rpm & install_jboss
-  wait
+  dnf install -y http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+  dnf install -y git unzip java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
+    httpd ovirt-host-deploy* python-paramiko ovirt-engine-wildfly ovirt-engine-wildfly-overlay
 }
 
 function setup_db() {
@@ -58,6 +30,6 @@ EOF
   chkconfig postgresql on
 }
 
-install_dependencies
-su - $USER -c "$SCRIPTS_DIR/setup-maven.sh"
+install_dependencies &&
+su - $USER -c "$SCRIPTS_DIR/setup-maven.sh" &&
 setup_db

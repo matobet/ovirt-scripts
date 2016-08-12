@@ -19,7 +19,7 @@ function setup_db() {
   PGCONFIG=/var/lib/pgsql/data/pg_hba.conf
   sed -i "s/\(all\s\+127\.0\.0\.1\/32\s\+\)ident$/\1password/" $PGCONFIG
   sed -i "s/\(all\s\+::1\/128\s\+\)ident$/\1password/" $PGCONFIG
-  cat >> /etc/sysctl.d/ovirt-postgresql.conf <<EOF
+  cat > /etc/sysctl.d/ovirt-postgresql.conf <<EOF
 # ovirt-engine configuration
 kernel.shmmax = 68719476736
 EOF

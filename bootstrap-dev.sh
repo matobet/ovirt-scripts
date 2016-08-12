@@ -15,7 +15,7 @@ function install_dependencies() {
 
 function setup_db() {
   echo ">>> Setting up DB"
-  postgresql-setup initdb
+  postgresql-setup --initdb
   PGCONFIG=/var/lib/pgsql/data/pg_hba.conf
   sed -i "s/\(all\s\+127\.0\.0\.1\/32\s\+\)ident$/\1password/" $PGCONFIG
   sed -i "s/\(all\s\+::1\/128\s\+\)ident$/\1password/" $PGCONFIG

@@ -31,5 +31,4 @@ EOF
 }
 
 install_dependencies &&
-su - $USER -c "$SCRIPTS_DIR/setup-maven.sh" &&
 setup_db

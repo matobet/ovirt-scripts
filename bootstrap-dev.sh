@@ -9,7 +9,8 @@ SCRIPTS_DIR=${SCRIPTS_DIR-$HOME/ovirt-scripts}
 function install_dependencies() {
   echo ">>> Installing dependencies"
   dnf install -y http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
-  dnf install -y git unzip java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
+  dnf install -y git unzip java-devel maven openssl postgresql-server m2crypto \
+    python-jinja2 python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
     httpd ovirt-host-deploy* python-paramiko ovirt-engine-wildfly ovirt-engine-wildfly-overlay ovirt-setup-lib
 }
 
@@ -30,5 +31,4 @@ EOF
   chkconfig postgresql on
 }
 
-install_dependencies &&
-setup_db
+install_dependencies && setup_db

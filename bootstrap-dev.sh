@@ -10,7 +10,7 @@ function install_dependencies() {
   echo ">>> Installing dependencies"
   dnf install -y http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
   dnf install -y git unzip java-devel maven openssl postgresql-server m2crypto python-psycopg2 python-cheetah python-daemon libxml2-python pyflakes \
-    httpd ovirt-host-deploy* python-paramiko ovirt-engine-wildfly ovirt-engine-wildfly-overlay
+    httpd ovirt-host-deploy* python-paramiko ovirt-engine-wildfly ovirt-engine-wildfly-overlay ovirt-setup-lib
 }
 
 function setup_db() {
